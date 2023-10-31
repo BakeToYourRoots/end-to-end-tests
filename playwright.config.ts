@@ -30,7 +30,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
-    userAgent: `btyr-end-to-end-tests-v${version.replace(/\./g, "_")}-bot`,
+    userAgent: `Ubuntu HeadlessChrome btyr-end-to-end-tests-v${version.replace(
+      /\./g,
+      "_",
+    )}-bot`,
   },
 
   /* Configure projects for major browsers */
