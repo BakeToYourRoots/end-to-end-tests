@@ -3,12 +3,10 @@ import { defineConfig, devices } from "@playwright/test";
 import { version } from "./package.json";
 
 const useDevice = (name: string) => {
+  const device = { ...devices[name] };
   return {
-    ...devices[name],
-    userAgent: `Ubuntu HeadlessChrome btyr-end-to-end-tests-v${version.replace(
-      /\./g,
-      "_",
-    )}-bot`,
+    ...device,
+    userAgent: `${device.userAgent} btyr-end-to-end-tests-bot/${version}`,
   };
 };
 
