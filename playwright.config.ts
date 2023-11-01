@@ -2,6 +2,14 @@ import { defineConfig, devices } from "@playwright/test";
 
 import { version } from "./package.json";
 
+const useDevice = (name: string) => {
+  const device = { ...devices[name] };
+  return {
+    ...device,
+    userAgent: `${device.userAgent} btyr-end-to-end-tests-bot/${version}`,
+  };
+};
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -30,47 +38,43 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
-    userAgent: `Ubuntu HeadlessChrome btyr-end-to-end-tests-v${version.replace(
-      /\./g,
-      "_",
-    )}-bot`,
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: useDevice("Desktop Chrome"),
     },
 
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: useDevice("Desktop Firefox"),
     },
 
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: useDevice("Desktop Safari"),
     },
 
     /* Test against mobile viewports. */
     {
       name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
+      use: useDevice("Pixel 5"),
     },
     {
       name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
+      use: useDevice("iPhone 12"),
     },
 
     /* Test against branded browsers. */
     {
       name: "Microsoft Edge",
-      use: { ...devices["Desktop Edge"], channel: "msedge" },
+      use: { ...useDevice("Desktop Edge"), channel: "msedge" },
     },
     {
       name: "Google Chrome",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
+      use: { ...useDevice("Desktop Chrome"), channel: "chrome" },
     },
   ],
 
