@@ -15,6 +15,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install age
+        run: sudo apt-get install -y age
+      - name: Access secret key
+        run: echo "${{ secrets.AGE_SECRET_KEY }}" > age-secret-key.txt
+      - name: Decrypt secrets
+        run: age --decrypt -i age-secret-key.txt secrets.enc.yml > secrets.yml
       - name: Install node
         uses: actions/setup-node@v3
         with:
