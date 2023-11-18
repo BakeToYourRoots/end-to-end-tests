@@ -1,14 +1,6 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig } from "@playwright/test";
 
-import { version } from "./package.json";
-
-const useDevice = (name: string) => {
-  const device = { ...devices[name] };
-  return {
-    ...device,
-    userAgent: `${device.userAgent} btyr-end-to-end-tests-bot/${version}`,
-  };
-};
+import { useDevice } from "./util";
 
 /**
  * Read environment variables from file.
@@ -45,36 +37,52 @@ export default defineConfig({
     {
       name: "chromium",
       use: useDevice("Desktop Chrome"),
+      testDir: "./tests/sites",
     },
 
     {
       name: "firefox",
       use: useDevice("Desktop Firefox"),
+      testDir: "./tests/sites",
     },
 
     {
       name: "webkit",
       use: useDevice("Desktop Safari"),
+      testDir: "./tests/sites",
     },
 
     /* Test against mobile viewports. */
     {
       name: "Mobile Chrome",
       use: useDevice("Pixel 5"),
+      testDir: "./tests/sites",
     },
     {
       name: "Mobile Safari",
       use: useDevice("iPhone 12"),
+      testDir: "./tests/sites",
     },
 
     /* Test against branded browsers. */
     {
       name: "Microsoft Edge",
       use: { ...useDevice("Desktop Edge"), channel: "msedge" },
+      testDir: "./tests/sites",
     },
     {
       name: "Google Chrome",
       use: { ...useDevice("Desktop Chrome"), channel: "chrome" },
+      testDir: "./tests/sites",
+    },
+
+    // Separate project to run "hidden" tests only in one browser instead of all of them
+    {
+      name: "hidden",
+      use: {
+        ...useDevice("Desktop Chrome"),
+      },
+      testDir: "./tests/hidden",
     },
   ],
 

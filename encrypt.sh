@@ -1,0 +1,1 @@
+age --encrypt --recipient age1t3ua34udqjvh3s3aymu09jqv0wdkc220fqcg0tq4g6x9w2zttpfspthu84 < tests/hidden/hidden.yml > tests/hidden/hidden.enc.yml
