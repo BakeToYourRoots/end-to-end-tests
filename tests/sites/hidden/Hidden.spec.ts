@@ -10,7 +10,6 @@ interface HiddenConfig {
 interface HiddenTestConfig {
   publicName: string;
   targetUrl: string;
-  expectation: object | undefined;
 }
 
 const describeHiddenTests = () => {
@@ -21,7 +20,6 @@ const describeHiddenTests = () => {
     test.describe(`Hidden page "${testConfig.publicName}"`, async () => {
       test("is reachable", async ({ page }) => {
         await page.goto(`${testConfig.targetUrl}`);
-        console.error(page.innerHTML);
         expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
       });
     });
