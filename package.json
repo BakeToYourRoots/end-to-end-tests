@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "pnpm exec playwright test",
+    "test:select": "pnpm exec playwright test -g"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
