@@ -19,8 +19,8 @@ jobs:
         run: sudo apt-get install -y age
       - name: Access secret key
         run: echo "${{ secrets.AGE_SECRET_KEY }}" > age-secret-key.txt
-      - name: Decrypt secrets
-        run: age --decrypt -i age-secret-key.txt secrets.enc.yml > secrets.yml
+      - name: Decrypt hidden test configs
+        run: age --decrypt -i age-secret-key.txt hidden.enc.yml > hidden.yml
       - name: Install node
         uses: actions/setup-node@v3
         with:
@@ -35,9 +35,3 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm exec playwright test
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 3
