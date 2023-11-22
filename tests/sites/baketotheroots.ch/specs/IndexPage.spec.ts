@@ -5,7 +5,7 @@ test.describe("Index page", async () => {
     await expect(indexPage.page).toHaveTitle(/Bake to Your Roots/);
   });
 
-  test("tells readers to 'stay tuned'", async ({ indexPage }) => {
-    await expect(indexPage.description).toHaveText(/stay tuned/i);
+  test("has a call to action to 'Learn more'", async ({ indexPage }) => {
+    await expect(indexPage.mainContent).toHaveText(/Learn more/i);
   });
 });

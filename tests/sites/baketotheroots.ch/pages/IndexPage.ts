@@ -2,11 +2,11 @@ import { type Locator, type Page } from "@playwright/test";
 
 export class IndexPage {
   readonly page: Page;
-  readonly description: Locator;
+  readonly mainContent: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.description = page.locator(".blog-description");
+    this.mainContent = page.locator("#main-content");
   }
 
   async goto() {
