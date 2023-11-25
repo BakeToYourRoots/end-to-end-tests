@@ -5,10 +5,11 @@ import { parse } from "yaml";
 import { test, expect } from "@playwright/test";
 
 interface HiddenConfig {
-  tests: HiddenTestConfig[];
+  reachable: TestConfig[];
+  uncrawlable: TestConfig[];
 }
 
-interface HiddenTestConfig {
+interface TestConfig {
   publicName: string;
   targetUrl: string;
 }
@@ -19,13 +20,29 @@ const describeHiddenTests = () => {
   ).toString();
   const hiddenConfig: HiddenConfig = parse(hiddenConfigYaml);
 
-  hiddenConfig.tests.forEach((testConfig) => {
+  hiddenConfig.reachable.forEach((testConfig) => {
     test.describe(`Hidden page "${testConfig.publicName}"`, async () => {
       test("is reachable", async ({ page }) => {
         await page.goto(`${testConfig.targetUrl}`);
         await expect(
           page.getByRole("button", { name: "Sign in" }),
         ).toBeVisible();
+      });
+    });
+  });
+
+  hiddenConfig.uncrawlable.forEach((testConfig) => {
+    test.describe(`Hidden page "${testConfig.publicName}"`, async () => {
+      test("is uncrawlable", async ({ request }) => {
+        const response = await request.get(`${testConfig.targetUrl}`);
+
+        const maybeHeader = response
+          .headersArray()
+          .find((header) => header.name == "X-Robots-Tag");
+        expect(maybeHeader).toBeDefined();
+
+        const headerValue = maybeHeader!.value;
+        expect(["none", "noindex"]).toContain(headerValue);
       });
     });
   });
