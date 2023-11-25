@@ -36,6 +36,6 @@ export class AboutPage {
   }
 
   async goto() {
-    await this.page.goto("/about/");
+    await this.page.goto("/en/about/");
   }
 }
