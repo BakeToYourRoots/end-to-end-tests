@@ -7,6 +7,12 @@
     "test": "pnpm exec playwright test",
     "test:select": "pnpm exec playwright test -g"
   },
+  "imports": {
+    "#utils": {
+      "import": "./dist/utils.d.mts",
+      "require": "./dist/utils.d.cts"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
