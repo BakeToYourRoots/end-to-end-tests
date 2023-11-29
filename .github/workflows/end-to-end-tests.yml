@@ -21,6 +21,8 @@ jobs:
         run: echo "${{ secrets.AGE_SECRET_KEY }}" > age-secret-key.txt
       - name: Decrypt hidden test configs
         run: age --decrypt -i age-secret-key.txt tests/hidden/hidden.enc.yml > tests/hidden/hidden.yml
+      - name: Mask secrets from hidden test config
+        run: bash script/add_masks.sh
       - name: Install node
         uses: actions/setup-node@v3
         with:
