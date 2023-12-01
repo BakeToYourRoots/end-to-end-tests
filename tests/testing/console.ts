@@ -21,7 +21,9 @@ export const expectation = async (console: ConsoleFixture, type: string) => {
   const message = pass
     ? () => `Console contains no entries of type "${type}"`
     : () =>
-        `Console contains ${relevantMessages.length} entries of type "${type}"`;
+        `Console contains ${
+          relevantMessages.length
+        } entries of type "${type}":\n${relevantMessages.join("\n")}`;
 
   return {
     message,
