@@ -23,7 +23,9 @@ export const expectation = async (console: ConsoleFixture, type: string) => {
     : () =>
         `Console contains ${
           relevantMessages.length
-        } entries of type "${type}":\n${relevantMessages.join("\n")}`;
+        } entries of type "${type}":\n${relevantMessages
+          .map((cm) => cm.text())
+          .join("\n")}`;
 
   return {
     message,
